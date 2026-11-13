@@ -4,19 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>五十音图特训 - Safari 优化版</title>
-    <meta name="theme-color" content="#f4f7fb">
+    <meta name="theme-color" content="#FEF6D0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2f74d0;
-            --primary-pressed: #245ca8;
-            --bg: #f4f7fb;
-            --card-bg: #ffffff;
-            --text-main: #263241;
-            --text-sub: #6d7988;
-            --line: #dbe4ef;
-            --surface-soft: #eef4fb;
-            --shadow-card: 0 18px 45px rgba(38, 50, 65, 0.14);
-            --shadow-soft: 0 8px 22px rgba(38, 50, 65, 0.08);
+            --canvas: #FEF6D0;
+            --surface: #FFFFFF;
+            --field: #FFF4C0;
+            --brand: #FAD531;
+            --brand-fg: #1A1A1A;
+            --brand-text: #D81631;
+            --brand-edge: #1A1A1A;
+            --sun: #FAD531;
+            --sun-fg: #1A1A1A;
+            --sun-text: #8A5A00;
+            --ink: #1A1A1A;
+            --ink-muted: #8A7048;
+            --control-line: #4A4A4A;
+            --edge: #1A1A1A;
+            --focus: #1A1A1A;
+            --primary: var(--brand);
+            --primary-pressed: #E6BE1C;
+            --bg: var(--canvas);
+            --card-bg: var(--surface);
+            --text-main: var(--ink);
+            --text-sub: var(--ink-muted);
+            --reading: #D81631;
+            --line: #E6E1D8;
+            --surface-soft: var(--field);
+            --shadow-card: none;
+            --shadow-soft: none;
+            --font: "Nunito", "Avenir Next", ui-rounded, system-ui, sans-serif;
+            --font-display: "Fredoka", "Nunito", ui-rounded, system-ui, sans-serif;
         }
 
         * {
@@ -28,18 +49,13 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        button,
-        select,
-        input {
-            font: inherit;
-        }
+        a { color: var(--reading); font-weight: 600; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font);
+            font-weight: 700;
             color: var(--text-main);
-            background:
-                radial-gradient(circle at top left, rgba(47, 116, 208, 0.09), transparent 34rem),
-                var(--bg);
+            background: var(--bg);
             margin: 0;
             padding: 18px 18px 22px;
             padding: max(18px, env(safe-area-inset-top)) 18px max(22px, env(safe-area-inset-bottom));
@@ -67,7 +83,7 @@
             min-height: 100vh;
             min-height: 100svh;
             padding: 24px;
-            background: rgba(250, 252, 255, 0.98);
+            background: rgba(254, 246, 208, 0.98);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -92,14 +108,14 @@
 
         .btn-start {
             background-color: var(--primary);
-            color: white;
+            color: var(--text-main);
             border: none;
             min-height: 58px;
             padding: 0 46px;
             font-size: 19px;
             font-weight: 720;
             border-radius: 999px;
-            box-shadow: 0 10px 24px rgba(47, 116, 208, 0.28);
+            box-shadow: 0 10px 24px rgba(226, 180, 35, 0.28);
             cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
@@ -127,7 +143,7 @@
         .settings {
             background: var(--card-bg);
             padding: 16px;
-            border: 1px solid rgba(219, 228, 239, 0.82);
+            border: 1px solid var(--edge);
             border-radius: 14px;
             box-shadow: var(--shadow-soft);
             width: 100%;
@@ -161,26 +177,6 @@
             gap: 8px;
         }
 
-        .check-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            min-height: 34px;
-            padding: 0 10px;
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            background: var(--surface-soft);
-            color: var(--text-main);
-            line-height: 1;
-        }
-
-        .check-pill input {
-            width: 16px;
-            height: 16px;
-            margin: 0;
-            accent-color: var(--primary);
-        }
-
         select {
             width: min(100%, 245px);
             min-height: 38px;
@@ -188,18 +184,18 @@
             border-radius: 10px;
             border: 1px solid var(--line);
             font-size: 16px;
-            background-color: #fff;
+            background-color: var(--card-bg);
             color: var(--text-main);
         }
 
         .status-line {
-            min-height: 18px;
             margin-top: 12px;
             color: var(--text-sub);
             font-size: 12px;
             line-height: 1.5;
             text-align: right;
         }
+        .status-line:empty { display: none; }
 
         .card-container {
             perspective: 1000px;
@@ -216,7 +212,7 @@
 
         .card-container:focus-visible {
             border-radius: 22px;
-            box-shadow: 0 0 0 4px rgba(47, 116, 208, 0.18);
+            box-shadow: 0 0 0 4px rgba(226, 180, 35, 0.35);
         }
 
         .card {
@@ -246,7 +242,7 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             background: var(--card-bg);
-            border: 1px solid rgba(219, 228, 239, 0.9);
+            border: 1px solid var(--edge);
             border-radius: 22px;
             box-shadow: var(--shadow-card);
             display: flex;
@@ -262,7 +258,7 @@
         .card-back {
             transform: rotateY(180deg) translateZ(0);
             -webkit-transform: rotateY(180deg) translateZ(0);
-            border: 2px solid var(--primary);
+            border: 2px solid var(--edge);
         }
 
         .char-large {
@@ -282,7 +278,7 @@
 
         .char-small {
             font-size: 40px;
-            color: var(--text-sub);
+            color: var(--reading);
             margin-top: 16px;
             line-height: 1;
             letter-spacing: 0;
@@ -294,7 +290,7 @@
             left: 24px;
             right: 24px;
             font-size: 14px;
-            color: #9aa6b4;
+            color: var(--text-sub);
             pointer-events: none;
             text-align: center;
         }
@@ -304,8 +300,8 @@
             min-height: 44px;
             padding: 0 20px;
             border-radius: 999px;
-            border: 1px solid var(--primary);
-            color: var(--primary);
+            border: 1px solid var(--edge);
+            color: var(--text-main);
             background: transparent;
             cursor: pointer;
             font-size: 16px;
@@ -340,7 +336,7 @@
         }
 
         .version-note {
-            color: #a7b2bf;
+            color: #A89870;
             font-size: 12px;
             margin: 20px 0 0;
         }
@@ -376,17 +372,17 @@
                 transition: none;
             }
         }
-    .memory-controls {display:flex;flex-wrap:wrap;gap:8px}.memory-controls button,#memory-pause {min-height:40px;border:1px solid var(--line);background:#fff;color:var(--text-main);border-radius:8px;padding:8px 12px;cursor:pointer}button:disabled{opacity:.45;cursor:default}#memory-progress{font-size:14px;line-height:1.6}body[data-mode="memory"] .front-replay-btn{display:inline-flex}body[data-mode="memory"] .card-front .hint{visibility:hidden}.char-large{overflow-wrap:anywhere} .setting-title{white-space:normal} [hidden]{display:none!important} .setting-group{min-width:0} .row-options{min-width:0} </style>
+    .memory-controls {display:flex;flex-wrap:wrap;gap:8px}.memory-controls button,#memory-pause {min-height:40px;border:1px solid var(--line);background:var(--card-bg);color:var(--text-main);border-radius:8px;padding:8px 12px;cursor:pointer}button:disabled{opacity:.45;cursor:default}#memory-progress{font-size:14px;line-height:1.6}body[data-mode="memory"] .front-replay-btn{display:inline-flex}body[data-mode="memory"] .card-front .hint{visibility:hidden}.char-large{overflow-wrap:anywhere} .setting-title{white-space:normal} [hidden]{display:none!important} .setting-group{min-width:0} .row-options{min-width:0} </style>
     <style>
         .range-picker { width: 100%; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
         .range-picker summary { min-height: 38px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 720; list-style: none; }
         .range-picker summary::-webkit-details-marker { display: none; }
-        .range-count { margin-left: auto; color: var(--primary); font-size: 13px; font-weight: 500; }
+        .range-count { margin-left: auto; color: var(--reading); font-size: 13px; font-weight: 500; }
         .range-chevron { font-size: 20px; line-height: 1; transition: transform 120ms; }
         .range-picker[open] .range-chevron { transform: rotate(180deg); }
-        .range-toolbar { display: flex; gap: 8px; padding: 10px 0 6px; position: sticky; top: 0; z-index: 2; background: white; }
-        #range-done { margin-left: auto; color: var(--primary); border-color: #94b8e8; }
-        .range-toolbar button { background: white; border: 1px solid var(--line); border-radius: 6px; min-height: 36px; padding: 6px 14px; color: var(--text-main); cursor: pointer; font-size: 13px; }
+        .range-toolbar { display: flex; gap: 8px; padding: 10px 0 6px; position: sticky; top: 0; z-index: 2; background: var(--card-bg); }
+        #range-done { margin-left: auto; color: var(--text-main); border-color: var(--edge); background: var(--surface-soft); }
+        .range-toolbar button { background: var(--card-bg); border: 1px solid var(--line); border-radius: 6px; min-height: 36px; padding: 6px 14px; color: var(--text-main); cursor: pointer; font-size: 13px; }
         .range-section { padding-top: 14px; }
         .range-section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 13px; }
         .range-section-title > span { color: var(--text-sub); }
@@ -396,11 +392,11 @@
         .kana-table th { font-weight: 600; color: var(--text-sub); padding: 0; }
         .kana-table th:first-child { width: 42px; }
         .kana-table td { padding: 0; height: 48px; }
-        .kana-choice { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 48px; padding: 3px 0; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--text-sub); cursor: pointer; }
+        .kana-choice { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 48px; padding: 3px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--card-bg); color: var(--text-main); cursor: pointer; }
         .kana-choice span { font-size: 21px; line-height: 1.2; }
-        .kana-choice small { font-size: 10px; line-height: 1.3; }
-        .kana-choice[aria-pressed="true"] { color: #205caa; border-color: #94b8e8; background: #edf4ff; }
-        .kana-choice[aria-pressed="true"] small { color: #4472a6; }
+        .kana-choice small { font-size: 10px; line-height: 1.3; color: var(--reading); }
+        .kana-choice[aria-pressed="true"] { color: var(--text-main); border-color: var(--edge); background: var(--surface-soft); }
+        .kana-choice[aria-pressed="true"] small { color: var(--reading); }
         .kana-choice:hover { border-color: var(--primary); }
         .kana-choice:focus-visible, .range-toolbar button:focus-visible, .range-picker summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
         .nasal-choice { width: calc((100% - 63px) / 5); margin: 3px 0 0 48px; }
@@ -419,15 +415,196 @@
         #kana-chart { width:100%; padding:0 10px 12px; }
         #kana-chart h2 { display:flex; align-items:center; justify-content:space-between; font-size:20px; margin:0 0 8px; }
         #kana-chart h2 small { font-size:13px; color:var(--text-sub); font-weight:400; }
-        #chart-playing { font-size:14px; min-height:22px; margin:0; color:var(--primary); }
+        #chart-playing { font-size:14px; min-height:22px; margin:0; color:var(--reading); }
         .chart-axis { display:inline-flex; align-items:center; justify-content:center; min-height:30px; }
-        #kana-chart .kana-choice { background:#fff; color:var(--text-main); }
-        #kana-chart .kana-choice small { color:var(--text-sub); }
-        #kana-chart .kana-choice.is-playing { background:#e3f1eb; border-color:#3e8b69; color:#216144; }
+        #kana-chart .kana-choice { background:var(--card-bg); color:var(--text-main); }
+        #kana-chart .kana-choice small { color:var(--reading); }
+        #kana-chart .kana-choice.is-playing { background:var(--primary); border-color:var(--edge); color:var(--text-main); }
+        #kana-chart .kana-choice.is-playing small { color:var(--reading); }
         #kana-chart .range-section { padding-top:18px; }
         #kana-chart .kana-table td, #kana-chart .kana-choice { height:58px; }
         #kana-chart .kana-choice span { font-size:24px; }
         #kana-chart .kana-choice small { font-size:11px; }
+    </style>
+    <style>
+        h1, h2, .start-title, .char-large, .setting-title, .range-picker summary {
+            font-family: var(--font-display);
+            letter-spacing: 0;
+        }
+        #start-overlay { background: var(--canvas); }
+        .start-title { font-size: 34px; font-weight: 650; }
+        .header h1 { font-weight: 650; }
+        .settings {
+            background: var(--surface);
+            border: 2px solid var(--control-line);
+            border-bottom-width: 5px;
+            border-bottom-color: var(--edge);
+            border-radius: 20px;
+            box-shadow: none;
+        }
+        .setting-group {
+            align-items: stretch;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .setting-title {
+            color: var(--ink-muted);
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .card-face {
+            background: var(--surface);
+            border: 3px solid var(--edge);
+            border-radius: 24px;
+            box-shadow: none;
+        }
+        .card-back {
+            border: 3px solid var(--edge);
+            box-shadow: none;
+        }
+        .char-large.is-latin,
+        .char-small.is-latin,
+        .kana-choice small {
+            font-family: var(--font);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .card-container:focus-visible { box-shadow: 0 0 0 3px var(--focus); }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            min-height: 52px;
+            padding: 0 42px 0 16px;
+            border: 2px solid var(--control-line);
+            border-bottom-width: 5px;
+            border-bottom-color: var(--edge);
+            border-radius: 16px;
+            background-color: #FFFFFF;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 6 L8 10.5 L12.5 6' fill='none' stroke='%231A1A1A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            color: var(--ink);
+            font-family: var(--font);
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: none;
+            cursor: pointer;
+        }
+        select:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+        .btn-start,
+        .memory-controls button,
+        #memory-pause,
+        .range-toolbar button,
+        .audio-btn,
+        .front-replay-btn,
+        .kana-choice {
+            border-width: 2px;
+            border-style: solid;
+            border-bottom-width: 4px;
+            border-radius: 14px;
+            font-family: var(--font);
+            font-weight: 800;
+            box-shadow: none;
+            transition: transform 60ms ease, border-bottom-width 60ms ease, background-color 120ms ease;
+        }
+        .btn-start {
+            background: var(--brand);
+            color: var(--brand-fg);
+            border-color: var(--brand-edge);
+            border-radius: 16px;
+        }
+        .btn-start:active { background: var(--primary-pressed); }
+        .audio-btn, .range-toolbar button, .memory-controls button, #memory-pause {
+            background: #FFFFFF;
+            color: var(--ink);
+            border-color: var(--control-line);
+            border-bottom-color: var(--edge);
+        }
+        .front-replay-btn { background: #FFFFFF; }
+        .kana-choice {
+            background: var(--surface);
+            color: var(--ink);
+            border-color: var(--control-line);
+            border-bottom-color: var(--edge);
+            border-radius: 12px;
+        }
+        .kana-choice small, .char-small { color: var(--reading); }
+        .char-small:not(.is-latin) { font-weight: 650; }
+        .kana-choice[aria-pressed="true"] {
+            background: var(--field);
+            color: var(--ink);
+            border-color: var(--control-line);
+            border-bottom-color: var(--edge);
+        }
+        .kana-choice[aria-pressed="true"] small { color: var(--reading); }
+        #kana-chart .kana-choice { background: var(--surface); color: var(--ink); }
+        #kana-chart .kana-choice small { color: var(--reading); }
+        #kana-chart .kana-choice.is-playing {
+            background: var(--sun);
+            color: var(--sun-fg);
+            border-color: var(--brand-edge);
+            border-bottom-color: var(--brand-edge);
+        }
+        #kana-chart .kana-choice.is-playing small { color: var(--reading); }
+        #range-done {
+            background: var(--brand);
+            color: var(--brand-fg);
+            border-color: var(--brand-edge);
+        }
+        .range-count, #chart-playing { color: var(--reading); font-weight: 600; }
+        .btn-start:active,
+        .memory-controls button:active,
+        #memory-pause:active,
+        .range-toolbar button:active,
+        .audio-btn:active,
+        .front-replay-btn:active,
+        .kana-choice:active,
+        #range-done:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+        .kana-choice:hover { border-color: var(--edge); }
+        .chart-spot { width: 100%; margin-top: 16px; margin-bottom: 28px; pointer-events: none; display: flex; justify-content: center; }
+        .chart-spot-grid { position: relative; display: grid; gap: 6px 8px; justify-content: center; align-items: center; }
+        .spot-col { text-align: center; font-size: 12px; font-weight: 700; color: #7A756C; line-height: 1; }
+        .spot-col.is-current { color: var(--reading); font-weight: 800; }
+        .spot-axis { position: absolute; right: calc(100% + 10px); bottom: 0; height: 36px; display: flex; align-items: center; font-size: 13px; font-weight: 800; color: var(--ink); line-height: 1; white-space: nowrap; }
+        .spot-cell {
+            width: 38px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--edge);
+            border-radius: 10px;
+            background: #FFFFFF;
+            color: var(--ink);
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .spot-cell.is-empty { background: transparent; border-color: transparent; }
+        .spot-cell.is-current { background: var(--brand); border-color: var(--edge); color: var(--ink); }
+        .card-back.has-spot .char-large { font-size: 72px; }
+        .card-back.has-spot .char-small { margin-top: 4px; font-size: 28px; }
+        .card-back.has-spot .audio-btn { margin-top: 8px; }
+        body[data-mode="hiragana-to-romaji"] .card-container {
+            height: clamp(400px, 70svh, 480px);
+        }
+        .kana-table { border-spacing: 6px; }
+        .hint, .status-line, .version-note { color: var(--ink-muted); font-weight: 700; }
+        a { color: var(--reading); }
+        button:focus-visible, select:focus-visible, .kana-choice:focus-visible, .range-toolbar button:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .btn-start, .kana-choice, .audio-btn, .range-toolbar button, select { transition: none; }
+        }
     </style>
 </head>
 <body>
@@ -465,7 +642,7 @@
 <div class="setting-group"><label><input type="checkbox" id="memory-auto" checked> 自动推进</label><button id="memory-pause" type="button">暂停</button></div>
 <p id="memory-progress" aria-live="polite"></p>
 <div class="memory-controls"><button type="button" id="memory-step">下一步</button><button type="button" data-grade="hard">没记住</button><button type="button" data-grade="fuzzy">有点模糊</button><button type="button" data-grade="easy">记住了</button></div>
-</div><div class="status-line" id="status-line" aria-live="polite">发音：正在准备日语语音</div>
+</div><div class="status-line" id="status-line" aria-live="polite"></div>
         </div>
 
         <section id="kana-chart" aria-label="五十音点读表" hidden>
@@ -484,6 +661,9 @@
                 <div class="card-face card-back">
                     <div class="char-large" id="answer-main">a</div>
                     <div class="char-small" id="answer-sub" lang="ja-JP">あ</div>
+                    <div class="chart-spot" id="chart-spot" hidden>
+                        <div class="chart-spot-grid" id="chart-spot-grid"></div>
+                    </div>
                     <button class="audio-btn" id="btn-audio" type="button">听发音</button>
                     <div class="hint">点击卡片进入下一题</div>
                 </div>
@@ -495,6 +675,7 @@
     <script>
 document.addEventListener('DOMContentLoaded', function () {
 'use strict';
+const nativeApp=typeof navigator!=='undefined'&&/KanaTrainerApp/.test(navigator.userAgent||'');
 const iosDevice=typeof navigator!=='undefined'&&(/iPhone|iPad|iPod/.test(navigator.userAgent||'')||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1));
 const kanaData = [{"h":"あ","r":"a","row":"a"},{"h":"い","r":"i","row":"a"},{"h":"う","r":"u","row":"a"},{"h":"え","r":"e","row":"a"},{"h":"お","r":"o","row":"a"},{"h":"か","r":"ka","row":"ka"},{"h":"き","r":"ki","row":"ka"},{"h":"く","r":"ku","row":"ka"},{"h":"け","r":"ke","row":"ka"},{"h":"こ","r":"ko","row":"ka"},{"h":"さ","r":"sa","row":"sa"},{"h":"し","r":"shi","row":"sa"},{"h":"す","r":"su","row":"sa"},{"h":"せ","r":"se","row":"sa"},{"h":"そ","r":"so","row":"sa"},{"h":"た","r":"ta","row":"ta"},{"h":"ち","r":"chi","row":"ta"},{"h":"つ","r":"tsu","row":"ta"},{"h":"て","r":"te","row":"ta"},{"h":"と","r":"to","row":"ta"},{"h":"な","r":"na","row":"na"},{"h":"に","r":"ni","row":"na"},{"h":"ぬ","r":"nu","row":"na"},{"h":"ね","r":"ne","row":"na"},{"h":"の","r":"no","row":"na"},{"h":"は","r":"ha","row":"ha"},{"h":"ひ","r":"hi","row":"ha"},{"h":"ふ","r":"fu","row":"ha"},{"h":"へ","r":"he","row":"ha"},{"h":"ほ","r":"ho","row":"ha"},{"h":"ま","r":"ma","row":"ma"},{"h":"み","r":"mi","row":"ma"},{"h":"む","r":"mu","row":"ma"},{"h":"め","r":"me","row":"ma"},{"h":"も","r":"mo","row":"ma"},{"h":"や","r":"ya","row":"ya"},{"h":"ゆ","r":"yu","row":"ya"},{"h":"よ","r":"yo","row":"ya"},{"h":"ら","r":"ra","row":"ra"},{"h":"り","r":"ri","row":"ra"},{"h":"る","r":"ru","row":"ra"},{"h":"れ","r":"re","row":"ra"},{"h":"ろ","r":"ro","row":"ra"},{"h":"わ","r":"wa","row":"wa"},{"h":"を","r":"wo","row":"wa"},{"h":"ん","r":"n","row":"wa"},{"h":"が","r":"ga","row":"ga"},{"h":"ぎ","r":"gi","row":"ga"},{"h":"ぐ","r":"gu","row":"ga"},{"h":"げ","r":"ge","row":"ga"},{"h":"ご","r":"go","row":"ga"},{"h":"ざ","r":"za","row":"za"},{"h":"じ","r":"ji","row":"za"},{"h":"ず","r":"zu","row":"za"},{"h":"ぜ","r":"ze","row":"za"},{"h":"ぞ","r":"zo","row":"za"},{"h":"だ","r":"da","row":"da"},{"h":"ぢ","r":"ji","row":"da"},{"h":"づ","r":"zu","row":"da"},{"h":"で","r":"de","row":"da"},{"h":"ど","r":"do","row":"da"},{"h":"ば","r":"ba","row":"ba"},{"h":"び","r":"bi","row":"ba"},{"h":"ぶ","r":"bu","row":"ba"},{"h":"べ","r":"be","row":"ba"},{"h":"ぼ","r":"bo","row":"ba"},{"h":"ぱ","r":"pa","row":"pa"},{"h":"ぴ","r":"pi","row":"pa"},{"h":"ぷ","r":"pu","row":"pa"},{"h":"ぺ","r":"pe","row":"pa"},{"h":"ぽ","r":"po","row":"pa"},{"h":"きゃ","r":"kya","row":"yoon"},{"h":"きゅ","r":"kyu","row":"yoon"},{"h":"きょ","r":"kyo","row":"yoon"},{"h":"しゃ","r":"sha","row":"yoon"},{"h":"しゅ","r":"shu","row":"yoon"},{"h":"しょ","r":"sho","row":"yoon"},{"h":"ちゃ","r":"cha","row":"yoon"},{"h":"ちゅ","r":"chu","row":"yoon"},{"h":"ちょ","r":"cho","row":"yoon"},{"h":"にゃ","r":"nya","row":"yoon"},{"h":"にゅ","r":"nyu","row":"yoon"},{"h":"にょ","r":"nyo","row":"yoon"},{"h":"ひゃ","r":"hya","row":"yoon"},{"h":"ひゅ","r":"hyu","row":"yoon"},{"h":"ひょ","r":"hyo","row":"yoon"},{"h":"みゃ","r":"mya","row":"yoon"},{"h":"みゅ","r":"myu","row":"yoon"},{"h":"みょ","r":"myo","row":"yoon"},{"h":"りゃ","r":"rya","row":"yoon"},{"h":"りゅ","r":"ryu","row":"yoon"},{"h":"りょ","r":"ryo","row":"yoon"},{"h":"ぎゃ","r":"gya","row":"yoon-voiced"},{"h":"ぎゅ","r":"gyu","row":"yoon-voiced"},{"h":"ぎょ","r":"gyo","row":"yoon-voiced"},{"h":"じゃ","r":"ja","row":"yoon-voiced"},{"h":"じゅ","r":"ju","row":"yoon-voiced"},{"h":"じょ","r":"jo","row":"yoon-voiced"},{"h":"びゃ","r":"bya","row":"yoon-voiced"},{"h":"びゅ","r":"byu","row":"yoon-voiced"},{"h":"びょ","r":"byo","row":"yoon-voiced"},{"h":"ぴゃ","r":"pya","row":"yoon-voiced"},{"h":"ぴゅ","r":"pyu","row":"yoon-voiced"},{"h":"ぴょ","r":"pyo","row":"yoon-voiced"}];
 const $ = id => document.getElementById(id);
@@ -629,7 +810,6 @@ function refreshVoices(){
  voiceSelect.replaceChildren(new Option('原声 · 正常速度','1'),new Option('原声 · 慢速','0.85'));
  let saved='1';try{saved=localStorage.getItem('kanaTrainerAudioRate')||'1';}catch(_){}
  voiceSelect.value=saved==='0.85'?'0.85':'1';
- $('status-line').textContent='真人录音已内置在这个文件里，双击即可离线使用';
 }
 const clipUrls=new Map();
 function clipUrl(hiragana){
@@ -648,6 +828,7 @@ function clipUrl(hiragana){
 }
 function speak(onEnd, kana=current){
  if(!kana)return;
+ $('status-line').textContent='';
  player.pause();
  stopBuffer();
  player.onended=null;player.onerror=null;
@@ -696,7 +877,7 @@ function speak(onEnd, kana=current){
   player.src=src;
   try{const result=player.play();if(result&&result.catch)result.catch(()=>{if(!webPlay(direct))fail();});}catch(_){if(!webPlay(direct))fail();}
  };
- if(!(iosDevice&&webPlay(direct)))start(iosDevice?(direct||clipUrl(kana.h)):(clipUrl(kana.h)||direct));
+ if(!(iosDevice&&!nativeApp&&webPlay(direct)))start(iosDevice&&!nativeApp?(direct||clipUrl(kana.h)):(clipUrl(kana.h)||direct));
 }
 function pool(){
  return kanaData.filter(k=>selectedKana.has(k.h));
@@ -716,7 +897,49 @@ function changeFilter(){
  updateFilter();
  next();
 }
-function text(id,value,lang){$(id).textContent=value;if(lang)$(id).lang=lang;}
+function text(id,value,lang){const el=$(id);el.textContent=value;if(lang)el.lang=lang;el.classList.toggle('is-latin',lang==='en');}
+const chartBoards=[
+ {name:'清音',cols:['a','i','u','e','o'],rows:[['a','あ','い','う','え','お'],['k','か','き','く','け','こ'],['s','さ','し','す','せ','そ'],['t','た','ち','つ','て','と'],['n','な','に','ぬ','ね','の'],['h','は','ひ','ふ','へ','ほ'],['m','ま','み','む','め','も'],['y','や','','ゆ','','よ'],['r','ら','り','る','れ','ろ'],['w','わ','','','','を'],['','ん']]},
+ {name:'浊音 / 半浊音',cols:['a','i','u','e','o'],rows:[['g','が','ぎ','ぐ','げ','ご'],['z','ざ','じ','ず','ぜ','ぞ'],['d','だ','ぢ','づ','で','ど'],['b','ば','び','ぶ','べ','ぼ'],['p','ぱ','ぴ','ぷ','ぺ','ぽ']]},
+ {name:'拗音',cols:['ya','yu','yo'],rows:[['ky','きゃ','きゅ','きょ'],['sh','しゃ','しゅ','しょ'],['ch','ちゃ','ちゅ','ちょ'],['ny','にゃ','にゅ','にょ'],['hy','ひゃ','ひゅ','ひょ'],['my','みゃ','みゅ','みょ'],['ry','りゃ','りゅ','りょ'],['gy','ぎゃ','ぎゅ','ぎょ'],['j','じゃ','じゅ','じょ'],['by','びゃ','びゅ','びょ'],['py','ぴゃ','ぴゅ','ぴょ']]}
+];
+function findSpot(h){
+ for(const board of chartBoards){
+  for(const row of board.rows){
+   const index=row.indexOf(h);
+   if(index>0)return {board,row,index};
+  }
+ }
+ return null;
+}
+function rowName(key){
+ if(!key||key==='a')return key;
+ return key+'a';
+}
+function renderSpot(kana){
+ const found=findSpot(kana.h);
+ const grid=$('chart-spot-grid');
+ if(!found){grid.innerHTML='';return;}
+ const cells=found.row.slice(1);
+ if(cells.length===1){
+  grid.style.gridTemplateColumns='38px';
+  grid.innerHTML='<span class="spot-cell is-current" lang="ja">ん</span>';
+  return;
+ }
+ grid.style.gridTemplateColumns='repeat('+cells.length+', 38px)';
+ const heads=found.board.cols.map((name,i)=>'<span class="spot-col'+(i===found.index-1?' is-current':'')+'">'+name+'</span>').join('');
+ const body='<span class="spot-axis">'+rowName(found.row[0])+'</span>'+cells.map((ch,i)=>{
+  if(!ch)return '<span class="spot-cell is-empty"></span>';
+  return '<span class="spot-cell'+(i===found.index-1?' is-current':'')+'" lang="ja">'+ch+'</span>';
+ }).join('');
+ grid.innerHTML=heads+body;
+}
+function updateSpot(){
+ const on=mode.value==='hiragana-to-romaji'&&flipped&&!!current;
+ $('chart-spot').hidden=!on;
+ card.querySelector('.card-back').classList.toggle('has-spot',on);
+ if(on)renderSpot(current);
+}
 function render(){
  document.body.dataset.mode=mode.value;
  const isChart=mode.value==='chart';
@@ -724,7 +947,7 @@ function render(){
  card.hidden=isChart;
  $('range-picker').hidden=isChart;
  $('memory-settings').hidden=mode.value!=='memory';
- if(isChart)return;
+ if(isChart){updateSpot();return;}
  card.setAttribute('aria-disabled',String(!current));
  [$('btn-audio'),$('front-replay'),$('memory-pause')].forEach(b=>b.disabled=!current);
  if(!current){
@@ -737,6 +960,7 @@ function render(){
   $('memory-progress').textContent='尚未选择假名';
   document.querySelectorAll('[data-grade]').forEach(b=>b.disabled=true);
   $('memory-step').disabled=true;
+  updateSpot();
   return;
  }
  card.querySelector('.card-front .hint').textContent='点击卡片查看答案';
@@ -763,6 +987,7 @@ function render(){
  }
  inner.classList.toggle('is-flipped',flipped);
  $('memory-pause').textContent=paused?'继续':'暂停';
+ updateSpot();
 }
 function schedule(){
  if(!started||paused||mode.value!=='memory'||phase===4||!$('memory-auto').checked)return;
